@@ -14,6 +14,9 @@ class SubjectsViewController: UIViewController {
     private var subjects: [Subject] = []
     private var filteredSubjects: [Subject] = []
     
+    private let connectionBanner = ConnectionBannerView()
+    private let activityIndicator = UIActivityIndicatorView(style: .large)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -29,6 +32,12 @@ class SubjectsViewController: UIViewController {
         searchBar.placeholder = "search_subject".localized
         searchBar.delegate = self
         searchBar.searchBarStyle = .minimal
+        
+        activityIndicator.color = UIColor.systemBlue
+        activityIndicator.hidesWhenStopped = true
+        
+        view.addSubview(activityIndicator)
+        view.addSubview(connectionBanner)
     }
     
     private func setupCollectionView() {
@@ -45,11 +54,16 @@ class SubjectsViewController: UIViewController {
         
         view.addSubview(searchBar)
         view.addSubview(collectionView)
+        
+        view.bringSubviewToFront(connectionBanner)
+        view.bringSubviewToFront(activityIndicator)
     }
     
     private func setupConstraints() {
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        connectionBanner.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -59,14 +73,62 @@ class SubjectsViewController: UIViewController {
             collectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
+            connectionBanner.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 8),
+            connectionBanner.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            connectionBanner.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            connectionBanner.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
     
     private func loadSubjects() {
+        activityIndicator.startAnimating()
+        
+        guard NetworkMonitor.shared.isConnected else {
+            loadLocalSubjects()
+            connectionBanner.showOffline()
+            return
+        }
+        
+        if NetworkMonitor.shared.connectionType == .cellular {
+            connectionBanner.showCellular()
+        }
+        
+        let currentLanguage = getCurrentLanguage()
+        
+        APIService.shared.fetchQuizzes(language: currentLanguage) { [weak self] result in
+            guard let self = self else { return }
+            
+            self.activityIndicator.stopAnimating()
+            
+            switch result {
+            case .success(let remoteSubjects):
+                self.subjects = remoteSubjects
+                self.filteredSubjects = remoteSubjects
+                self.collectionView.reloadData()
+                self.connectionBanner.hide()
+                
+            case .failure(let error):
+                print("Error fetching: \(error.localizedDescription)")
+                self.loadLocalSubjects()
+                self.connectionBanner.showOffline()
+            }
+        }
+    }
+
+    private func loadLocalSubjects() {
         subjects = QuizDataManager.shared.getLocalizedSubjects()
         filteredSubjects = subjects
         collectionView.reloadData()
+        activityIndicator.stopAnimating()
+    }
+
+    private func getCurrentLanguage() -> String {
+        return NSLocale.preferredLanguages.first?.prefix(2).lowercased() ?? "es"
     }
     
     private func filterSubjects(with searchText: String) {
@@ -93,7 +155,7 @@ extension SubjectsViewController: UICollectionViewDataSource, UICollectionViewDe
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let padding: CGFloat = 56 // 20 + 16 + 20
+        let padding: CGFloat = 56
         let availableWidth = view.frame.width - padding
         let cellWidth = availableWidth / 2
         return CGSize(width: cellWidth, height: cellWidth)
