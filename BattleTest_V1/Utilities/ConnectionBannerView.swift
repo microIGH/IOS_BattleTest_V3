@@ -10,7 +10,7 @@ class ConnectionBannerView: UIView {
         super.init(frame: frame)
         setupUI()
     }
-    
+    //
     required init?(coder: NSCoder) {
         fatalError("init(coder:) not implemented")
     }
