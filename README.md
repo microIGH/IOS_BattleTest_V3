@@ -244,7 +244,7 @@ Para usar un backend diferente, modificar esta constante.
 <img src="screenshots/subjects.png" width="250" alt="Materias"/>
 
 ### Lista de Quizzes
-<img src="screenshots/quizzes.png" width="250" alt="Lista de Quizzes"/>
+<img src="screenshots/quizes.png" width="250" alt="Lista de Quizzes"/>
 
 ### Quiz en Progreso
 <img src="screenshots/quiz.png" width="250" alt="Quiz"/>
