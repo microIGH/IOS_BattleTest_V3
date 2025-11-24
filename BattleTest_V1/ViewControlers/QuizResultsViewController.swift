@@ -18,6 +18,7 @@ class QuizResultsViewController: UIViewController {
     private let timeLabel = UILabel()
     private let statusLabel = UILabel()
     private let continueButton = UIButton(type: .system)
+    private let shareButton = UIButton(type: .system)
     
     private let achievementsLabel = UILabel()
     private let achievementsStackView = UIStackView()
@@ -86,6 +87,16 @@ class QuizResultsViewController: UIViewController {
         achievementsStackView.alignment = .center
         achievementsStackView.isHidden = true
         
+        // Botón compartir
+        shareButton.setTitle(NSLocalizedString("share_results", comment: ""), for: .normal)
+        shareButton.backgroundColor = UIColor.systemGreen
+        shareButton.setTitleColor(.white, for: .normal)
+        shareButton.layer.cornerRadius = 10
+        shareButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        shareButton.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
+
+        
+        
         continueButton.setTitle("continue_button".localized, for: .normal)
         continueButton.backgroundColor = UIColor.systemBlue
         continueButton.setTitleColor(.white, for: .normal)
@@ -104,6 +115,7 @@ class QuizResultsViewController: UIViewController {
         view.addSubview(statusLabel)
         view.addSubview(achievementsLabel)
         view.addSubview(achievementsStackView)
+        view.addSubview(shareButton)
         view.addSubview(continueButton)
     }
     
@@ -118,6 +130,7 @@ class QuizResultsViewController: UIViewController {
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
         achievementsLabel.translatesAutoresizingMaskIntoConstraints = false
         achievementsStackView.translatesAutoresizingMaskIntoConstraints = false
+        shareButton.translatesAutoresizingMaskIntoConstraints = false
         continueButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -160,9 +173,14 @@ class QuizResultsViewController: UIViewController {
             achievementsStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             achievementsStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
+            shareButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+            shareButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+            shareButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -60),
+            shareButton.heightAnchor.constraint(equalToConstant: 50),
+
             continueButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             continueButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
-            continueButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40),
+            continueButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -2),
             continueButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
@@ -317,6 +335,78 @@ class QuizResultsViewController: UIViewController {
                     }
                 }
             }
+        }
+    }
+    
+    
+    @objc private func shareButtonTapped() {
+        // ORIGEN: Botón compartir → PROCESO: Captura + Texto + UIActivityVC → DESTINO: Compartir
+        
+        // 1. Generar texto para compartir
+        let shareText = quizResult.generateShareText()
+        
+        // 2. Capturar screenshot de la pantalla de resultados
+        guard let screenshot = view.captureScreenshot() else {
+            print("Error capturando screenshot")
+            return
+        }
+        
+        // 3. Array de items a compartir
+        // IMPORTANTE: Poner texto primero para mejor compatibilidad con WhatsApp
+        let itemsToShare: [Any] = [shareText, screenshot]
+        
+        // 4. Crear UIActivityViewController
+        let activityViewController = UIActivityViewController(
+            activityItems: itemsToShare,
+            applicationActivities: nil
+        )
+        
+        // 5. Excluir algunas opciones no relevantes (opcional)
+        activityViewController.excludedActivityTypes = [
+            .addToReadingList,
+            .assignToContact,
+            .openInIBooks,
+            .print
+        ]
+        
+        // 6. Configuración para iPad (evitar crash)
+        if let popoverController = activityViewController.popoverPresentationController {
+            popoverController.sourceView = shareButton
+            popoverController.sourceRect = shareButton.bounds
+        }
+        
+        // 7. Completion handler
+        activityViewController.completionWithItemsHandler = { activityType, completed, returnedItems, error in
+            if completed {
+                print("✅ Compartido exitosamente via: \(activityType?.rawValue ?? "desconocido")")
+                
+                // Mostrar mensaje de éxito al usuario
+                self.showShareSuccessMessage()
+            } else {
+                print("❌ Compartir cancelado")
+            }
+            
+            if let error = error {
+                print("⚠️ Error al compartir: \(error.localizedDescription)")
+            }
+        }
+        
+        // 8. Presentar
+        present(activityViewController, animated: true)
+    }
+
+    private func showShareSuccessMessage() {
+        let alert = UIAlertController(
+            title: "✅",
+            message: NSLocalizedString("share_success", comment: ""),
+            preferredStyle: .alert
+        )
+        
+        present(alert, animated: true)
+        
+        // Auto-dismiss después de 1.5 segundos
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            alert.dismiss(animated: true)
         }
     }
 }

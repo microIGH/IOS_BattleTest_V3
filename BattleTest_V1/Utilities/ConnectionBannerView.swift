@@ -2,7 +2,7 @@
 import UIKit
 
 class ConnectionBannerView: UIView {
-    
+        
     private let iconLabel = UILabel()
     private let messageLabel = UILabel()
     

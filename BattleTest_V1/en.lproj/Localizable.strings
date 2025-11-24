@@ -70,3 +70,15 @@
 "failed" = "Failed ✗";
 "new_achievements" = "🏆 New achievements earned!";
 "continue_button" = "Continue";
+
+// Share Results
+"share_results" = "Share Results";
+"share_passed_emoji" = "🎉";
+"share_failed_emoji" = "💪";
+"share_passed_status" = "I passed!";
+"share_failed_status" = "Still improving!";
+"share_quiz_completed" = "Quiz completed";
+"share_grade" = "Grade: %@ (%d%%)";
+"share_correct_answers" = "Correct answers: %d of %d questions";
+"share_date" = "Date: %@";
+"share_hashtags" = "#BattleTest #Education #Learning";

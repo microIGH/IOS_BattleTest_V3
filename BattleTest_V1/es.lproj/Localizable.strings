@@ -70,3 +70,15 @@
 "failed" = "No aprobado ✗";
 "new_achievements" = "🏆 ¡Nuevos logros obtenidos!";
 "continue_button" = "Continuar";
+
+// Share Results
+"share_results" = "Compartir Resultados";
+"share_passed_emoji" = "🎉";
+"share_failed_emoji" = "💪";
+"share_passed_status" = "¡Aprobé!";
+"share_failed_status" = "¡Sigo mejorando!";
+"share_quiz_completed" = "Cuestionario completado";
+"share_grade" = "Calificación: %@ (%d%%)";
+"share_correct_answers" = "Aciertos: %d de %d preguntas";
+"share_date" = "Fecha: %@";
+"share_hashtags" = "#BattleTest #Educación #Aprendizaje";

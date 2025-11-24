@@ -9,7 +9,8 @@ class APIService {
     private init() {}
     
     func fetchQuizzes(language: String, completion: @escaping (Result<[Subject], Error>) -> Void) {
-        let urlString = "\(baseURL)/api/quizzes/\(language)"
+        // SIEMPRE usar endpoint /es donde están todos los datos
+        let urlString = "\(baseURL)/api/quizzes/es"
         
         guard let url = URL(string: urlString) else {
             completion(.failure(NSError(domain: "Invalid URL", code: -1)))
@@ -34,7 +35,8 @@ class APIService {
             do {
                 let decoder = JSONDecoder()
                 let remoteSubjects = try decoder.decode([RemoteSubject].self, from: data)
-                let subjects = remoteSubjects.map { $0.toLocalSubject() }
+                // FILTRAR por idioma solicitado
+                let subjects = remoteSubjects.map { $0.toLocalSubject(filterLanguage: language) }
                 
                 DispatchQueue.main.async {
                     completion(.success(subjects))
@@ -57,8 +59,11 @@ struct RemoteSubject: Codable {
     let color: String
     let quizzes: [RemoteQuiz]
     
-    func toLocalSubject() -> Subject {
-        let localQuizzes = quizzes.map { remoteQuiz in
+    func toLocalSubject(filterLanguage: String) -> Subject {
+        // FILTRAR quizzes por idioma
+        let filteredQuizzes = quizzes.filter { $0.language == filterLanguage }
+        
+        let localQuizzes = filteredQuizzes.map { remoteQuiz in
             Quiz(
                 id: remoteQuiz.id,
                 title: remoteQuiz.title,
