@@ -62,7 +62,7 @@ azul-morado (#4285F4 → #5C6BC0).
 - Evita bugs de rotación durante ejecución de exámenes
 - Interfaz uniforme en iPhone y iPad
 
-## 📹 Video Demo
+## 📹 Video Demo(Hecho en Ipad)
 
 [![Ver demo](https://img.youtube.com/vi/X5jZ21GqYWE/0.jpg)](https://www.youtube.com/shorts/X5jZ21GqYWE)
 
