@@ -336,7 +336,7 @@ Para usar un backend diferente, modificar esta constante.
 ### Perfil de Usuario
 <img src="screenshots/profile.png" width="250" alt="Perfil"/>
 
-> **Nota:** Las imágenes están en la carpeta `screenshots/` en la raíz del proyecto.
+**Nota:** Las imágenes están en la carpeta `screenshots/` en la raíz del proyecto.
 
 ## 🎯 Características Destacadas
 
