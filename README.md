@@ -326,7 +326,7 @@ Para usar un backend diferente, modificar esta constante.
   <img src="screenshots/profile.png" width="200" alt="Perfil"/>
 </p>
 
-**Nota:** Las imágenes están en la carpeta `screenshots/` en la raíz del proyecto.
+> **Nota:** Las imágenes están en la carpeta `screenshots/` en la raíz del proyecto.
 
 ## 🎯 Características Destacadas
 
