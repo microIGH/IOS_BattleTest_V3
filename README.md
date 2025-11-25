@@ -64,7 +64,6 @@ azul-morado (#4285F4 → #5C6BC0).
 
 ## 📹 Video Demo
 
-🎥 
 [![Ver demo](https://img.youtube.com/vi/mHJ5VQk4kzE/0.jpg)](https://youtube.com/shorts/mHJ5VQk4kzE)
 
 ## ✨ Características Principales
