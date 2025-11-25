@@ -299,7 +299,7 @@ El proyecto está configurado para usar la API de Railway:
 ```swift
 // Network/APIService.swift
 private let baseURL = "https://quiz-api-movil-production.up.railway.app"
-```
+
 
 **Endpoint de cuestionarios:** `GET /api/quizzes/es`
 
