@@ -312,24 +312,33 @@ Para usar un backend diferente, modificar esta constante.
 
 ## 📸 Capturas de Pantalla
 
-<p align="center">
-  <img src="screenshots/LaunchScreen.png" width="200" alt="Launch Screen"/>
-  <img src="screenshots/inicio.png" width="200" alt="Registro"/>
-  <img src="screenshots/dashboard.png" width="200" alt="Dashboard"/>
-  <img src="screenshots/subjects.png" width="200" alt="Materias"/>
-</p>
+### Launch Screen
+<img src="screenshots/LaunchScreen.png" width="250" alt="Launch Screen"/>
 
-<p align="center">
-  <img src="screenshots/quizes.png" width="200" alt="Lista de Quizzes"/>
-  <img src="screenshots/quiz.png" width="200" alt="Quiz"/>
-  <img src="screenshots/Pantalla de resultados.png" width="200" alt="Resultados"/>
-  <img src="screenshots/profile.png" width="200" alt="Perfil"/>
-</p>
+### Registro Inicial
+<img src="screenshots/inicio.png" width="250" alt="Registro"/>
+
+### Dashboard Gamificado
+<img src="screenshots/dashboard.png" width="250" alt="Dashboard"/>
+
+### Selección de Materias
+<img src="screenshots/subjects.png" width="250" alt="Materias"/>
+
+### Lista de Quizzes
+<img src="screenshots/quizes.png" width="250" alt="Lista de Quizzes"/>
+
+### Quiz en Progreso
+<img src="screenshots/quiz.png" width="250" alt="Quiz"/>
+
+### Resultados del Quiz
+<img src="screenshots/Pantalla de resultados.png" width="250" alt="Resultados"/>
+
+### Perfil de Usuario
+<img src="screenshots/profile.png" width="250" alt="Perfil"/>
 
 > **Nota:** Las imágenes están en la carpeta `screenshots/` en la raíz del proyecto.
 
 ## 🎯 Características Destacadas
-
 ### 1. Sistema de Gamificación (15 Achievements)
 
 ```swift
