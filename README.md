@@ -28,9 +28,11 @@ azul-morado (#4285F4 → #5C6BC0).
 - Naranja (#FF9800): Alertas, rachas, elementos de atención
 - Modo oscuro: Adaptación automática preservando identidad visual
 
-### Launch Screen
-<img src="screenshots/logo.jpg" width="250" alt="Logo"/>
+### Logo
+<img src="screenshots/logo.jpeg" width="250" alt="Logo"/>
 
+
+##
 
 ## Justificación Técnica
 
@@ -62,8 +64,8 @@ azul-morado (#4285F4 → #5C6BC0).
 
 ## 📹 Video Demo
 
-🎥 [Ver en YouTube](https://youtu.be/Qm-yvSGEpnA?si=9i4oeta5R2iyIWec)
-
+🎥 
+[![Ver demo](https://img.youtube.com/vi/mHJ5VQk4kzE/0.jpg)](https://youtube.com/shorts/mHJ5VQk4kzE)
 
 ## ✨ Características Principales
 
