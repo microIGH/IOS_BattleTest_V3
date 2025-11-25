@@ -64,7 +64,7 @@ azul-morado (#4285F4 → #5C6BC0).
 
 ## 📹 Video Demo
 
-[![Ver demo](https://img.youtube.com/vi/mHJ5VQk4kzE/0.jpg)](https://youtube.com/shorts/mHJ5VQk4kzE)
+[![Ver demo](https://img.youtube.com/vi/X5jZ21GqYWE/0.jpg)](https://www.youtube.com/shorts/X5jZ21GqYWE)
 
 ## ✨ Características Principales
 
@@ -121,7 +121,7 @@ azul-morado (#4285F4 → #5C6BC0).
 
 ## 🛠️ Tecnologías Implementadas
 
-### Requisitos Módulos 4 y 5 - UNAM
+### Requisitos Diplomado iOS - UNAM DGTIC
 
 | Requisito | Implementación | Estado |
 |-----------|----------------|--------|
@@ -130,9 +130,15 @@ azul-morado (#4285F4 → #5C6BC0).
 | **Modo Oscuro** | Automático según sistema | ✅ |
 | **Navegación** | TabBarController + NavigationController | ✅ |
 | **Multiidioma** | Localizable.strings (ES/EN/FR) | ✅ |
+| **Auto Layout** | NSLayoutConstraint programático | ✅ |
+| **UIKit Completo** | 100% programático sin Storyboards | ✅ |
 | **Detección Red** | NetworkMonitor con NWPathMonitor | ✅ |
 | **Aviso Datos** | ConnectionBannerView automático | ✅ |
-| **Backend** | Railway 24/7 con fallback offline | ✅ |
+| **Backend REST** | Railway 24/7 con PostgreSQL | ✅ |
+| **Persistencia** | UserDefaults + fallback offline | ✅ |
+| **Compartir** | UIActivityViewController (screenshot + texto) | ✅ |
+| **MVC Architecture** | Separación Models/Views/Controllers | ✅ |
+| **Managers Pattern** | Singletons para lógica de negocio | ✅ |
 
 ### Stack Tecnológico
 
