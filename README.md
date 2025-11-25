@@ -8,7 +8,62 @@ Aplicación iOS de cuestionarios educativos con sistema de gamificación, soport
 
 ## 📋 Descripción
 
-Battle Test es una aplicación móvil diseñada para el aprendizaje interactivo mediante quizzes educativos en tres idiomas (español, inglés y francés). Implementa un sistema completo de gamificación con 15 achievements categorizados, niveles, puntos y rachas de aciertos. Incluye persistencia local con UserDefaults, sincronización con backend REST y funcionalidad de compartir resultados en redes sociales.
+Battle Test es una aplicación móvil diseñada para fomentar el aprendizaje interactivo de estudiantes de secundaria y su preparación del examen de ingreso a nivel medio superior mediante quizzes educativos en tres idiomas (español, inglés y francés). Implementa un sistema completo de gamificación con 15 achievements categorizados, niveles, puntos y rachas de aciertos. Incluye persistencia local con UserDefaults, sincronización con backend REST y funcionalidad de compartir resultados en redes sociales.
+
+
+## Logo y Branding
+
+**Logo:** Iniciales "BT" (Battle Test) en un círculo con gradiente 
+azul-morado (#4285F4 → #5C6BC0).
+
+**Significado:**
+- **Círculo:** Representa la completitud del conocimiento
+- **Gradiente azul-morado:** Combina confianza (azul) con creatividad (morado)
+- **Tipografía bold:** Transmite seriedad académica y confianza
+- **Diseño minimalista:** Facilita reconocimiento en pantalla de inicio
+
+**Paleta de colores:**
+- Azul (#4285F4): Asignaturas científicas, elementos de UI
+- Verde (#4CAF50): Logros, progreso, feedback positivo
+- Naranja (#FF9800): Alertas, rachas, elementos de atención
+- Modo oscuro: Adaptación automática preservando identidad visual
+
+### Launch Screen
+<img src="screenshots/logo.jpg" width="250" alt="Logo"/>
+
+
+## Justificación Técnica
+
+**Dispositivos objetivo:** iPhone y iPad
+**Razón:** 
+- iPhone: Dispositivo personal principal de estudiantes de secundaria
+- iPad: Uso en aulas y bibliotecas escolares, pantalla amplia ideal para estudio
+- Consistencia de hardware y versiones de iOS en ecosistema Apple
+- UI adaptativa que escala correctamente en ambos dispositivos
+
+**Versión mínima de iOS:** 14.0
+**Razón:** 
+- Acceso a >95% de dispositivos iPhone y iPad activos
+- APIs de networking modernas (NWPathMonitor para detección de conectividad)
+- Soporte completo para modo oscuro automático
+- Performance adecuado en dispositivos de 3+ años de antigüedad
+- URLSession moderna con async/await support
+
+**Versión objetivo de iOS:** 17.0
+**Razón:** Testing en simuladores y dispositivos actuales con últimas características
+
+**Orientaciones soportadas:** Portrait (vertical) únicamente
+**Razón:**
+- Experiencia educativa optimizada para lectura de cuestionarios
+- Preguntas y opciones de respuesta más legibles en formato vertical
+- Consistencia con apps educativas estándar (Duolingo, Khan Academy, Quizlet)
+- Evita bugs de rotación durante ejecución de exámenes
+- Interfaz uniforme en iPhone y iPad
+
+## 📹 Video Demo
+
+🎥 [Ver en YouTube](https://youtu.be/Qm-yvSGEpnA?si=9i4oeta5R2iyIWec)
+
 
 ## ✨ Características Principales
 
@@ -92,49 +147,61 @@ Battle Test es una aplicación móvil diseñada para el aprendizaje interactivo 
 
 ```
 BattleTest_V1/
-├── Models/
-│   ├── Student.swift              # Usuario con XP, nivel, rachas
-│   ├── Achievement.swift          # Modelo de logros
-│   ├── AchievementManager.swift   # Sistema de achievements
-│   ├── Quiz.swift                 # Modelo de cuestionario
-│   ├── Question.swift             # Modelo de pregunta
-│   ├── Subject.swift              # Asignaturas
-│   ├── QuizResult.swift           # Resultados de quiz
-│   ├── QuizSession.swift          # Sesión activa
-│   ├── QuizDataManager.swift      # Datos locales + API
-│   └── UserProgressManager.swift  # Persistencia UserDefaults
+├── Extensions/
+│   └── UIView+Screenshot.swift          # Captura de pantalla para compartir
+│
+├── Manager/
+│   ├── AchievementManager.swift         # Sistema de logros
+│   └── QuizEngine.swift                 # Lógica core de quizzes
+│
+├── Model/
+│   ├── Achievement.swift                # Modelo de logros
+│   ├── AppSettings.swift                # Configuración de app
+│   ├── Quiz.swift                       # Modelo de cuestionario
+│   ├── QuizDataManager.swift            # Datos locales + fetch API
+│   ├── QuizResult.swift                 # Resultados de quiz
+│   ├── QuizSession.swift                # Sesión activa de quiz
+│   ├── Student.swift                    # Modelo de usuario
+│   ├── Subject.swift                    # Modelo de asignaturas
+│   └── UserProgressManager.swift        # Persistencia UserDefaults
+│
 ├── Network/
-│   ├── NetworkMonitor.swift       # Detección WiFi/Cellular/Offline
-│   ├── APIService.swift           # Networking con Railway
-│   └── ConnectionBannerView.swift # Banner de conectividad
-├── Managers/
-│   └── QuizEngine.swift           # Lógica de quizzes
+│   ├── APIService.swift                 # Networking con Railway backend
+│   └── NetworkMonitor.swift             # Detección WiFi/Cellular/Offline
+│
+├── Utilities/
+│   └── ConnectionBannerView.swift       # Banner de estado de red
+│
+├── View/
+│   ├── AchievementGridView.swift        # Grid de logros obtenidos
+│   ├── CircularProgressView.swift       # Círculo de progreso animado
+│   ├── PenaltyDotsView.swift            # Indicador de 3 errores
+│   ├── QuestionView.swift               # Vista de pregunta con opciones
+│   ├── StatsCardView.swift              # Tarjetas de estadísticas Dashboard
+│   ├── SubjectCollectionViewCell.swift  # Celda de asignatura (grid)
+│   └── WeeklyProgressChart.swift        # Gráfica de actividad semanal
+│
 ├── ViewControllers/
-│   ├── RegistrationViewController.swift      # Registro inicial
-│   ├── MainTabBarController.swift            # Tab Bar principal
-│   ├── DashboardViewController.swift         # Tab 1: Dashboard gamificado
-│   ├── SubjectsViewController.swift          # Tab 2: Grid de materias
-│   ├── QuizListViewController.swift          # Lista de quizzes
-│   ├── QuizViewController.swift              # Quiz en progreso
-│   ├── QuizResultsViewController.swift       # Resultados + compartir
-│   └── ProfileViewController.swift           # Tab 3: Perfil de usuario
-├── Views/
-│   ├── CircularProgressView.swift     # Círculo de progreso animado
-│   ├── AchievementGridView.swift      # Grid de achievements
-│   ├── WeeklyProgressChart.swift      # Gráfica semanal
-│   ├── StatsCardView.swift            # Tarjetas de estadísticas
-│   ├── SubjectCollectionViewCell.swift # Celda de materia
-│   ├── QuestionView.swift             # Vista de pregunta
-│   └── PenaltyDotsView.swift          # Indicador de errores
-├── Supporting Files/
-│   ├── AppDelegate.swift
-│   ├── SceneDelegate.swift
-│   └── LaunchScreen.storyboard
-└── Resources/
-    ├── Assets.xcassets
-    ├── Localizable.strings (es)   # Español
-    ├── Localizable.strings (en)   # Inglés
-    └── Localizable.strings (fr)   # Francés
+│   ├── DashboardViewController.swift        # Tab 1: Dashboard gamificado
+│   ├── MainTabBarController.swift           # Tab Bar principal (3 tabs)
+│   ├── ProfileViewController.swift          # Tab 3: Perfil de usuario
+│   ├── QuizListViewController.swift         # Lista de quizzes por materia
+│   ├── QuizResultsViewController.swift      # Resultados + compartir
+│   ├── QuizViewController.swift             # Quiz en ejecución
+│   ├── RegistrationViewController.swift     # Registro inicial (primera vez)
+│   └── SubjectsViewController.swift         # Tab 2: Grid de asignaturas
+│
+├── AppDelegate.swift                    # Configuración inicial de app
+├── Assets.xcassets                      # Iconos, colores, imágenes
+├── Info.plist                           # Configuración del proyecto
+├── LaunchScreen.storyboard              # Pantalla de inicio
+├── Localizable.strings                  # Strings localizables
+│   ├── Localizable.strings (English)    # Traducciones inglés
+│   ├── Localizable.strings (Spanish)    # Textos español (base)
+│   └── Localizable.strings (French)     # Traducciones francés
+├── LocalizationHelper.swift             # Helper para localización
+├── Main.storyboard                      # Storyboard principal (mínimo)
+└── SceneDelegate.swift                  # Manejo de escenas y navegación
 ```
 
 ## 🔄 Flujo de Datos
@@ -195,7 +262,6 @@ Usuario selecciona WhatsApp/Instagram/Messages/etc.
 - macOS Sonoma 14.0+ (para Xcode 15)
 - Xcode 15.0 o superior
 - iOS 14.0+ (Deployment Target)
-- Cuenta de Apple Developer (para dispositivo físico)
 - Conexión a internet (solo primera carga)
 
 ### Pasos de Instalación
@@ -220,11 +286,19 @@ Usuario selecciona WhatsApp/Instagram/Messages/etc.
 
 ### Configuración del Backend
 
-El proyecto está configurado para usar la API de Railway:
+## Configuración del Backend
 
+El proyecto está configurado para usar la API de Railway:
 ```swift
 // Network/APIService.swift
 private let baseURL = "https://quiz-api-movil-production.up.railway.app"
+```
+
+**Endpoint de cuestionarios:** `GET /api/quizzes/es`
+
+**URL completa:** https://quiz-api-movil-production.up.railway.app/api/quizzes/es
+
+La aplicación filtra los cuestionarios por idioma del dispositivo automáticamente.
 ```
 
 Para usar un backend diferente, modificar esta constante.
@@ -280,10 +354,16 @@ enum NetworkStatus {
     case offline     // Sin conexión (usa caché local)
 }
 
-// ConnectionBannerView se muestra automáticamente
-- Verde: "Conectado a WiFi"
-- Amarillo: "Usando datos celulares"
-- Rojo: "Sin conexión - Modo offline"
+## Detección de Conectividad
+
+La aplicación implementa `NetworkMonitor.swift` que detecta el estado de la conexión en tiempo real usando `NWPathMonitor`.
+
+**Indicador visual (ConnectionBannerView):**
+- 🔴 Rojo: "Sin conexión - Modo offline" (aparece en pantalla de Asignaturas)
+- 🟡 Amarillo: "Usando datos celulares" (advertencia de consumo de datos)
+- ✅ Sin banner: Conexión WiFi activa
+
+La app funciona completamente offline utilizando datos locales embebidos en `QuizDataManager.swift`.
 ```
 
 ### 3. Compartir Resultados
@@ -362,15 +442,6 @@ label.text = NSLocalizedString("welcome_message", comment: "")
 - ✅ Sistema de penalización (3 errores)
 - ✅ Navegación fluida sin memory leaks
 
-### Ejecutar Tests (Pendiente)
-
-```bash
-# Unit Tests
-Cmd + U en Xcode
-
-# UI Tests
-Xcode → Product → Test
-```
 
 ## 🗺️ Roadmap
 
@@ -391,16 +462,6 @@ Xcode → Product → Test
 - [ ] Notificaciones push para rachas
 - [ ] Análisis de rendimiento por materia
 - [ ] Widgets de iOS para progreso
-
-## 🤝 Decisiones de Diseño
-
-| Decisión | Alternativa | Justificación |
-|----------|-------------|---------------|
-| UIKit Programático | SwiftUI | Mayor control sobre layouts, debugging más fácil |
-| UserDefaults | Core Data | Datos simples sin relaciones complejas |
-| MVC + Managers | VIPER | Menos boilerplate, más directo para proyecto educativo |
-| URLSession | Alamofire | Sin dependencias externas, networking nativo |
-| Tab Bar | Side Menu | Navegación estándar de iOS, UX familiar |
 
 ## 📝 Configuración del Proyecto
 
@@ -450,7 +511,7 @@ GET /api/quizzes/es
 - Diplomado en Desarrollo de Aplicaciones para Dispositivos Móviles con iOS
 - Universidad Nacional Autónoma de México (UNAM)
 - Dirección General de Tecnologías de la Información y Comunicación (DGTIC)
-- Módulos 4 y 5: Desarrollo iOS Avanzado
+
 
 ## 📄 Licencia
 
@@ -471,4 +532,4 @@ Prohibido el uso comercial. Permitido el uso educativo con atribución apropiada
 
 ---
 
-**Desarrollado con ❤️ usando Swift y UIKit**
+**Desarrollado con ❤️ usando Swift y UIKit en Xcode**

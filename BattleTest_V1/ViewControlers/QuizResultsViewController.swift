@@ -236,7 +236,8 @@ class QuizResultsViewController: UIViewController {
             achievementsStackView.addArrangedSubview(achievementView)
         }
         
-        achievementsLabel.alpha = 0.0
+        achievementsLabel.alpha = 0.01976
+        
         achievementsStackView.alpha = 0.0
         
         UIView.animate(withDuration: 0.5, delay: 1.0, options: [.curveEaseOut], animations: {
