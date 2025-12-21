@@ -243,8 +243,23 @@ struct Student: Codable {
             "matematicas": 2
         ]
         
+        // Mapeo de prefijos de quiz a subjectId
+        let quizPrefixMap: [String: String] = [
+            "bio": "biologia",
+            "fis": "fisica",
+            "qui": "quimica",
+            "mat": "matematicas"
+        ]
+        
         for (subjectId, totalQuizzes) in subjectQuizCounts {
-            let completedInSubject = quizResults.filter { $0.subjectId == subjectId }.count
+            // Encontrar el prefijo para esta asignatura
+            let prefix = quizPrefixMap.first(where: { $0.value == subjectId })?.key ?? ""
+            
+            // Contar quizzes que empiezan con este prefijo
+            let completedInSubject = completedQuizzes.filter { quizId in
+                quizId.hasPrefix(prefix)
+            }.count
+            
             let percentage = totalQuizzes > 0 ? Float(completedInSubject) / Float(totalQuizzes) * 100 : 0
             progress[subjectId] = (completed: completedInSubject, total: totalQuizzes, percentage: percentage)
         }

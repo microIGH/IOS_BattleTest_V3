@@ -62,9 +62,9 @@ azul-morado (#4285F4 → #5C6BC0).
 - Evita bugs de rotación durante ejecución de exámenes
 - Interfaz uniforme en iPhone y iPad
 
-## 📹 Video Demo(Hecho en Ipad)
+## 📹 Video Demo
 
-[![Ver demo](https://img.youtube.com/vi/X5jZ21GqYWE/0.jpg)](https://www.youtube.com/shorts/X5jZ21GqYWE)
+[![Ver demo](https://img.youtube.com/vi/mHJ5VQk4kzE/0.jpg)](https://youtube.com/shorts/mHJ5VQk4kzE)
 
 ## ✨ Características Principales
 
@@ -121,7 +121,7 @@ azul-morado (#4285F4 → #5C6BC0).
 
 ## 🛠️ Tecnologías Implementadas
 
-### Requisitos Diplomado iOS - UNAM DGTIC
+### Requisitos Módulos 4 y 5 - UNAM
 
 | Requisito | Implementación | Estado |
 |-----------|----------------|--------|
@@ -130,15 +130,9 @@ azul-morado (#4285F4 → #5C6BC0).
 | **Modo Oscuro** | Automático según sistema | ✅ |
 | **Navegación** | TabBarController + NavigationController | ✅ |
 | **Multiidioma** | Localizable.strings (ES/EN/FR) | ✅ |
-| **Auto Layout** | NSLayoutConstraint programático | ✅ |
-| **UIKit Completo** | 100% programático sin Storyboards | ✅ |
 | **Detección Red** | NetworkMonitor con NWPathMonitor | ✅ |
 | **Aviso Datos** | ConnectionBannerView automático | ✅ |
-| **Backend REST** | Railway 24/7 con PostgreSQL | ✅ |
-| **Persistencia** | UserDefaults + fallback offline | ✅ |
-| **Compartir** | UIActivityViewController (screenshot + texto) | ✅ |
-| **MVC Architecture** | Separación Models/Views/Controllers | ✅ |
-| **Managers Pattern** | Singletons para lógica de negocio | ✅ |
+| **Backend** | Railway 24/7 con fallback offline | ✅ |
 
 ### Stack Tecnológico
 
@@ -299,7 +293,7 @@ El proyecto está configurado para usar la API de Railway:
 ```swift
 // Network/APIService.swift
 private let baseURL = "https://quiz-api-movil-production.up.railway.app"
-
+```
 
 **Endpoint de cuestionarios:** `GET /api/quizzes/es`
 
@@ -339,6 +333,7 @@ Para usar un backend diferente, modificar esta constante.
 > **Nota:** Las imágenes están en la carpeta `screenshots/` en la raíz del proyecto.
 
 ## 🎯 Características Destacadas
+
 ### 1. Sistema de Gamificación (15 Achievements)
 
 ```swift

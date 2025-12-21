@@ -12,6 +12,25 @@ class QuizDataManager {
     
     private init() {}
     
+    
+    func getSubjectsWithProgress() -> [Subject] {
+        var subjects = getLocalizedSubjects()
+        
+        guard let student = UserProgressManager.shared.getCurrentUser() else {
+            return subjects
+        }
+        
+        // Sincronizar isCompleted basado en completedQuizzes del estudiante
+        for i in 0..<subjects.count {
+            for j in 0..<subjects[i].quizzes.count {
+                let quizId = subjects[i].quizzes[j].id
+                subjects[i].quizzes[j].isCompleted = student.completedQuizzes.contains(quizId)
+            }
+        }
+        
+        return subjects
+    }
+    
     // ESPAÑOL - Método original
     func getAllSubjects() -> [Subject] {
         return [
@@ -670,6 +689,8 @@ class QuizDataManager {
             )
         ]
     }
+    
+    
 
     // VERSIÓN FRANCÉS - TODOS LOS QUIZZES
     private func getFrenchVersions() -> [Subject] {

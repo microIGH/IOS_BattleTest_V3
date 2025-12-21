@@ -34,6 +34,11 @@ class QuizListViewController: UIViewController {
         loadQuizzes()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
+            loadQuizzes()
+        }
+    
     private func setupUI() {
         view.backgroundColor = UIColor(named: "PrimaryBackground") ?? UIColor.systemBackground
         title = subject.name
@@ -68,6 +73,7 @@ class QuizListViewController: UIViewController {
         tableView.separatorStyle = .none
     }
     
+    
     private func setupConstraints() {
         headerView.translatesAutoresizingMaskIntoConstraints = false
         progressLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -97,7 +103,15 @@ class QuizListViewController: UIViewController {
     }
     
     private func loadQuizzes() {
-        quizzes = subject.quizzes
+        // Recargar subject con progreso actualizado
+        let subjects = QuizDataManager.shared.getSubjectsWithProgress()
+        if let updatedSubject = subjects.first(where: { $0.id == subject.id }) {
+            self.subject = updatedSubject
+            self.quizzes = updatedSubject.quizzes
+        } else {
+            self.quizzes = subject.quizzes
+        }
+        
         updateProgress()
         tableView.reloadData()
     }
@@ -229,4 +243,6 @@ class QuizTableViewCell: UITableViewCell {
             statusLabel.textColor = UIColor.systemGray3
         }
     }
+    
+    
 }
